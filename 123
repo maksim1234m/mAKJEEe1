@@ -1,0 +1,74 @@
+import pygame
+ 
+class Ring1():
+	def __init__(self,sc):
+		self.screen = sc
+	def initaz(self,obj,obj2,color):
+		self.screen.fill((0,0,0))
+		pygame.draw.circle(self.screen,color,(600,360),400)
+		self.screen.blit(obj,(0,0))
+		self.screen.blit(obj2,(600,360))
+ 
+class Ring2():
+	def __init__(self,obj,x,y):
+		self.obj = obj 
+		self.x = x
+		self.y = y
+ 
+	def draw_on_obj(self,color):
+		pygame.draw.circle(self.obj,color,(self.x,self.y),400)
+ 
+color = [(100,100,100),(200,200,200)]
+ 
+def run_game():
+	pygame.init()
+	sc = pygame.display.set_mode((1200,720))
+	obj = pygame.Surface((600,360))
+	obj2 = pygame.Surface((600,360))
+ 
+	ringobj = Ring2(obj,600,360)
+	ringob2 = Ring2(obj2,0,0)
+	ringobj.draw_on_obj(color[1])
+	ringob2.draw_on_obj(color[1])
+	ring1 = Ring1(sc)
+	ring1.initaz(obj,obj2,color[0])
+	c1 = 1
+	c2 = 0
+ 
+	while True:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				exit()
+			if event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_RIGHT:
+					c2 += 1
+					if c2 == 2:
+						c2 = 0
+ 
+					ring1.initaz(obj,obj2,color[c2])
+ 
+				if event.key == pygame.K_LEFT:
+					c1 += 1
+					if c1 == 2:
+						c1 = 0
+ 
+ 
+					ringobj.draw_on_obj(color[c1])
+					ringob2.draw_on_obj(color[c1])
+					ring1.initaz(obj,obj2,color[c2])
+ 
+				if event.key == pygame.K_UP:
+					ringobj.draw_on_obj(color[1])
+					ringob2.draw_on_obj(color[1])
+					ring1.initaz(obj,obj2,color[0])
+ 
+ 
+ 
+ 
+ 
+		pygame.display.update()
+ 
+ 
+ 
+ 
+run_game()
